@@ -1,0 +1,15 @@
+.form {
+  margin: 1rem;
+  padding: 1rem 2rem;
+}
+
+label,
+input,
+button {
+  margin: 0.5rem;
+  padding: 0.25rem;
+}
+
+.message {
+  color: rgb(200, 100, 100);
+}
