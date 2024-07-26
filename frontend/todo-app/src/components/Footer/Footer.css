@@ -1,0 +1,12 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3rem;
+  text-align: right;
+}
+
+.footer-val {
+  padding: 0rem 0.5rem 1rem 0rem;
+}

@@ -1,0 +1,37 @@
+.todo-list-table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+table {
+  background-color: antiquewhite;
+  margin: 1rem 2rem;
+  padding: 1rem;
+}
+table,
+th,
+td {
+  border: 1px solid white;
+  border-collapse: collapse;
+  background-color: #96d4d4;
+}
+tr {
+  padding-bottom: 0.5rem;
+}
+/* 
+thead {
+  border: 1rem solid green;
+} */
+
+td {
+  padding: 0.12rem 1rem;
+  text-align: left;
+}
+.description {
+  padding: 0 2rem;
+}
+button {
+  background-color: rgb(230, 92, 23);
+  border: none;
+  padding: 0.45rem 1rem;
+}

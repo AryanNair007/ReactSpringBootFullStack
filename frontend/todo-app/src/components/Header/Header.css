@@ -1,0 +1,13 @@
+.header {
+  overflow: hidden;
+  position: relative;
+  top: 0;
+  width: 100%;
+
+  padding: 0.8rem 0rem;
+}
+
+/* .header-val {
+    
+   padding: 0rem 0rem 1rem 0rem; 
+} */
