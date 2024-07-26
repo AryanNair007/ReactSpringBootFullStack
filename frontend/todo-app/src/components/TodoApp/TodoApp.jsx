@@ -6,11 +6,11 @@ import WelcomeComponent from "../Welcome/WelcomeComponent";
 import ErrorComponent from "../ErrorComponent/ErrorComponent";
 import TodoList from "../TodoManager/TodoManager";
 import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
 import Logout from "../Logout/Logout";
 import AuthProvider from "../Security/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AuthenticatedRoute from "../AuthenticatedRoute/AuthenticatedRoute";
+import TodoComponent from "../TodoComponent/TodoComponent";
 
 function TodoApp() {
   return (
@@ -40,6 +40,14 @@ function TodoApp() {
                 }
               />
               <Route
+                path="/todos/:id"
+                element={
+                  <AuthenticatedRoute>
+                    <TodoComponent />
+                  </AuthenticatedRoute>
+                }
+              />
+              <Route
                 path="/logout"
                 element={
                   <AuthenticatedRoute>
@@ -50,7 +58,7 @@ function TodoApp() {
               <Route path="*" element={<ErrorComponent />} />
             </Routes>
           </div>
-          <Footer />
+          {/* <Footer /> */}
         </BrowserRouter>
       </AuthProvider>
     </div>

@@ -1,72 +1,95 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../Security/AuthContext";
-import { retrieveAllTodoByUsername } from "../../api/todo-api";
+import { apiClient, deleteTodoByIdApi } from "../../api/todoApiService";
+import { useNavigate } from "react-router-dom";
+
 function TodoManager() {
   const authContext = useAuth();
+  const navigate = useNavigate();
+  const [todos, setTodos] = useState([]);
+  const [message, setMessage] = useState(null);
 
-  const today = new Date();
-  const targetDate = new Date(
-    today.getFullYear(),
-    today.getMonth() + 1,
-    today.getDate() + 3
-  );
-  const todoFromBackend = retrieveAllTodoByUsername(auth);
-  const todos = [
-    {
-      id: 1,
-      description: "Learn FullStack",
-      isDone: false,
-      targetDate: targetDate,
-    },
-    {
-      id: 2,
-      description: "Learn SpringBoot",
-      isDone: false,
-      targetDate: targetDate,
-    },
-    {
-      id: 3,
-      description: "Learn Docker",
-      isDone: false,
-      targetDate: targetDate,
-    },
-  ];
+  const fetchTodosData = useCallback(async () => {
+    const username = authContext.user.username;
+    const response = await apiClient.get(`/users/${username}/todos`);
+    const result = response.data;
+    setTodos([...result]);
+    console.log("called");
+    return result;
+  }, [authContext.user]);
+  useEffect(() => {
+    (async () => {
+      await fetchTodosData();
+    })();
+  }, [fetchTodosData]);
+
+  const deleteTodo = async (id) => {
+    await deleteTodoByIdApi(authContext.user.username, id);
+    setMessage("Todo Successfully Deleted");
+    setTimeout(() => setMessage(null), 5000);
+    await fetchTodosData();
+  };
+
+  const updateTodo = async (id) => {
+    navigate(`/todos/${id}`);
+  };
+
+  const addNewTodo = async () => {
+    navigate(`/todos/-1`);
+  };
 
   return (
     <div className="container">
-      <h1>Todo Management Area</h1>
-      <div>Things You Want To Do!</div>
+      <h1>Things You Want To Do!</h1>
+      {message && <div className="alert alert-warning">{message}</div>}
       <div>
         <table className="table">
           <thead>
             <tr>
-              <td>Id</td>
-              <td>Description</td>
-              <td>Is Done</td>
-              <td>Target Date</td>
-              <td></td>
-              <td></td>
+              <th>Description</th>
+              <th>Is Done</th>
+              <th>Target Date</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {todos.map((todo, id) => {
               return (
                 <tr key={todo.id}>
-                  <td>{todo.id}</td>
                   <td>{todo.description}</td>
                   <td>{todo.isDone ? "True" : "False"}</td>
-                  <td>{todo.targetDate.toDateString()}</td>
+                  <td>{todo.targetDate}</td>
                   <td>
-                    <button>Delete</button>
+                    <button
+                      className="btn btn-warning"
+                      onClick={() => {
+                        deleteTodo(todo.id);
+                      }}
+                    >
+                      Delete
+                    </button>
                   </td>
                   <td>
-                    <button>Update</button>
+                    <button
+                      className="btn btn-success"
+                      onClick={() => {
+                        updateTodo(todo.id);
+                      }}
+                    >
+                      Update
+                    </button>
                   </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
+        <div>
+          <button className="btn btn-success" onClick={addNewTodo}>
+            Add New Todo{" "}
+          </button>
+        </div>
       </div>
     </div>
   );

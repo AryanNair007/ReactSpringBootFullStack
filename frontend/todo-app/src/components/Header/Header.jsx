@@ -5,7 +5,7 @@ import { useAuth } from "../Security/AuthContext";
 
 function Header() {
   const authContext = useAuth();
-
+  const username = authContext.user.username;
   return (
     <header className="border-bottom border-light border-5 mb-5 p-2">
       <div className="container">
@@ -18,7 +18,7 @@ function Header() {
               <ul className="navbar-nav">
                 <li className="nav-item ">
                   {authContext.isAuth && (
-                    <Link className="nav-link" to="/welcome">
+                    <Link className="nav-link" to={`/welcome/${username}`}>
                       Home
                     </Link>
                   )}
