@@ -52,7 +52,6 @@ function TodoComponent() {
     if (values.targetDate == null || values.targetDate == "")
       errors.targetDate = "Enter a valid target date";
 
-    console.log(values);
     return errors;
   };
 

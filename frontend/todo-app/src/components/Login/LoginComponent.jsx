@@ -22,8 +22,8 @@ function LoginComponent() {
       onSubmit();
     }
   };
-  const onSubmit = () => {
-    if (authContext.login(username, password)) {
+  const onSubmit = async () => {
+    if (await authContext.login(username, password)) {
       navigate(`/welcome/${username}`);
     } else {
       setIsAuth(false);

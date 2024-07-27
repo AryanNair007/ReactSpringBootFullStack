@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../Security/AuthContext";
-import { apiClient, deleteTodoByIdApi } from "../../api/todoApiService";
+import { deleteTodoByIdApi } from "../../api/todoApiService";
 import { useNavigate } from "react-router-dom";
+import apiClient from "../../api/apiClient";
 
 function TodoManager() {
   const authContext = useAuth();
@@ -14,7 +15,6 @@ function TodoManager() {
     const response = await apiClient.get(`/users/${username}/todos`);
     const result = response.data;
     setTodos([...result]);
-    console.log("called");
     return result;
   }, [authContext.user]);
   useEffect(() => {
